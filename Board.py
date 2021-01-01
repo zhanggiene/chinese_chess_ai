@@ -1,4 +1,5 @@
 import pygame
+from Piece import Piece
 class Board:
     def __init__(self,screen,cellSize):
         """
@@ -17,15 +18,17 @@ class Board:
         self.width=cellSize*self.Row
         self.height=cellSize*self.Column
         self.Color_line=(0,0,0)
+        self.piece=Piece(self.surf,0,0,5,5,cellSize)
 
         
         self.screen=screen
+        '''
     @staticmethod
     def potentialMove(_type):
-        if (_type==0):
-            
+        if (_type==0):'''
 
-    def draw(self):
+
+    def drawBoard(self):
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,self.cellSize), ((self.Column+1)*self.cellSize, self.cellSize),3)
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,self.cellSize), (self.cellSize,(self.Row+1)*self.cellSize),3)
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,(self.Column+2)*self.cellSize),((self.Column+1)*self.cellSize,(self.Row+1)*self.cellSize),3)
@@ -41,9 +44,13 @@ class Board:
         pygame.draw.line(self.surf, self.Color_line,(6*self.cellSize,self.cellSize), (4*self.cellSize, 3*self.cellSize))
         pygame.draw.line(self.surf, self.Color_line,(4*self.cellSize,8*self.cellSize), (6*self.cellSize, 10*self.cellSize))
         pygame.draw.line(self.surf, self.Color_line,(6*self.cellSize,8*self.cellSize), (4*self.cellSize, 10*self.cellSize))
-        pygame.draw.circle(self.surf,self.Color_line,(self.cellSize,self.cellSize),30)
+        #pygame.draw.circle(self.surf,self.Color_line,(self.cellSize,self.cellSize),30)
         #pygame.draw.acircle(self.surf, 0, 0, 20, (3,3,3))
         self.screen.blit(self.surf, (200,40))
+    def drawPiece(self):
+        self.piece.draw()
+
+
 
         
     

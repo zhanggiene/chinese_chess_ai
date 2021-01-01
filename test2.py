@@ -1,13 +1,16 @@
 import pygame,sys
 from pygame.locals import * 
 from Board import Board
+from Piece import Piece
 pygame.init ()  
-screen = pygame.display.set_mode ((1000, 800))
+screen = pygame.display.set_mode ((1000, 800))  # a surface. 
 screen.fill((255,255,255))
 pygame.display.flip()
 board=Board(screen,50)
 while True:
-    board.draw()
+    board.drawBoard()
+    board.drawPiece()
+
 
     pygame.display.flip() # draw the content
     for events in pygame.event.get():
