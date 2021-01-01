@@ -5,7 +5,7 @@ pygame.init ()
 screen = pygame.display.set_mode ((1000, 800))
 screen.fill((255,255,255))
 pygame.display.flip()
-board=Board(screen,80)
+board=Board(screen,50)
 while True:
     board.draw()
 

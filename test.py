@@ -16,9 +16,6 @@ def main ():
     #font = pygame.font.Font ('../FredGuo/simkai.ttf', 60) #Correct, the file name can include the path  
     #font = pygame.font.Font ('italic', 60) #Error, the name parameter should be the font file name  
     font=pygame.font.SysFont("hiraginosansgbttc",50)
-    a=pygame.font.get_fonts()
-    for b in a:
-        print(b)
     #font = pygame.font.SysFont ('nadeemttc', 60) #Correct, the name parameter should be the font name, and the character set should be the same as the system  
     text = font.render ("漢", 1, (10, 10, 10)) #The display content must be converted to Unicode, otherwise Chinese cannot be displayed normally  
     textpos = text.get_rect ()  
