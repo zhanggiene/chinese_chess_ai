@@ -7,9 +7,10 @@ screen = pygame.display.set_mode ((1000, 800))  # a surface.
 screen.fill((255,255,255))
 pygame.display.flip()
 board=Board(screen,50)
+board.initializePieces()
 while True:
     board.drawBoard()
-    board.drawPiece()
+    board.drawPieces()
 
 
     pygame.display.flip() # draw the content

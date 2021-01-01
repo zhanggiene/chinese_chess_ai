@@ -1,5 +1,9 @@
 import pygame
-from Piece import Piece
+from Piece import Piece 
+initialPosition={0:[(4,0)],1:[(3,0),(5,0)],2:[(2,0),(6,0)],3:[(1,0),(7,0)],4:[(0,0),(8,0)],5:[(1,2),(7,2)],6:[(0,3),(2,3),(4,3),(6,3),(8,3)]}
+# x,y  coordinate system all the way
+
+#start with 0,0    because we need to 
 class Board:
     def __init__(self,screen,cellSize):
         """
@@ -18,9 +22,8 @@ class Board:
         self.width=cellSize*self.Row
         self.height=cellSize*self.Column
         self.Color_line=(0,0,0)
-        self.piece=Piece(self.surf,0,0,5,5,cellSize)
-
-        
+        #self.pieces=[[-1]*(self.Column+1)]*(self.Row+1)   # wrong 
+        self.pieces=[[None for i in range(self.Column+1)] for j in range(self.Row+1)]
         self.screen=screen
         '''
     @staticmethod
@@ -47,12 +50,38 @@ class Board:
         #pygame.draw.circle(self.surf,self.Color_line,(self.cellSize,self.cellSize),30)
         #pygame.draw.acircle(self.surf, 0, 0, 20, (3,3,3))
         self.screen.blit(self.surf, (200,40))
-    def drawPiece(self):
-        self.piece.draw()
+    def initializePieces(self):
+        #initialize both the object stored in Mattrix 
+        for i in initialPosition:
+            for j in initialPosition[i]:
+                self.pieces[j[1]][j[0]]=Piece(self.surf,i,0,j[0],j[1],self.cellSize)
+                self.pieces[self.Row-j[1]][j[0]]=Piece(self.surf,i,1,j[0],self.Row-j[1],self.cellSize)
+
+    
+    def drawPieces(self):
+        for i in self.pieces:
+            for j in i:
+                if j!=None:
+                    j.draw()
+    def print(self):
+        for i in self.pieces:
+            for j in i:
+
+                print(j,end="")
+            print(" ")
+    def getPieces(self):
+        return self.pieces
+            
 
 
 
-        
+if __name__ == "__main__":
+    pygame.init ()  
+    screen = pygame.display.set_mode ((1000, 800))  # a surface. 
+    board=Board(screen,30)
+    board.initializePieces()
+    board.print()
+    
     
         
 
