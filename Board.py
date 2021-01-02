@@ -1,5 +1,6 @@
 import pygame
 from Piece import Piece 
+from Hint import Hint
 initialPosition={0:[(4,0)],1:[(3,0),(5,0)],2:[(2,0),(6,0)],3:[(1,0),(7,0)],4:[(0,0),(8,0)],5:[(1,2),(7,2)],6:[(0,3),(2,3),(4,3),(6,3),(8,3)]}
 # x,y  coordinate system all the way
 
@@ -25,8 +26,11 @@ class Board:
         self.Color_line=(0,0,0)
         #self.pieces=[[-1]*(self.Column+1)]*(self.Row+1)   # wrong 
         self.pieces=[[None for i in range(self.Column+1)] for j in range(self.Row+1)]
+        #access the self.pieces [Y][X]
+        self.hints=[[Hint(self.surf,i,j,self.cellSize) for i in range(self.Column+1)] for j in range(self.Row+1)]
+        #access the hint [Y][X]
         self.screen=screen
-        self.pieces[0][0]=Piece(self.surf,0,0,0,0,self.cellSize)
+        #self.pieces[0][0]=Piece(self.surf,0,0,0,0,self.cellSize)
         self.selectedPiece=None
         '''
     @staticmethod
@@ -60,19 +64,51 @@ class Board:
             for j in initialPosition[i]:
                 self.pieces[j[1]][j[0]]=Piece(self.surf,i,0,j[0],j[1],self.cellSize)
                 self.pieces[self.Row-j[1]][j[0]]=Piece(self.surf,i,1,j[0],self.Row-j[1],self.cellSize)
+    
+
     def drawPieces(self):
         for i in self.pieces:
             for j in i:
                 if j!=None:
                     j.draw(self.surf)
+    def drawHints(self):
+        for i in self.hints:
+            for j in i:
+                j.draw(self.surf)
     def update(self):
         self.pieces[0][0].update(1,1)
     def getClicked(self,pos):
-        for i in self.pieces:
+        if self.selectedPiece==None:
+            for i in self.pieces:
+                for j in i:
+                    if j!=None and j.is_clicked(pos):
+                        self.selectedPiece=j
+                        j.select()
+                        lists=j.potentialMove(self.Row,self.Column,self.pieces) # all the legal point
+                        self.switchOnHints(lists)
+
+        elif self.movePiece(pos):
+            self.deselect()
+        else:
+            self.deselect()
+            self.getClicked(pos)
+    def movePiece(self,pos):
+        if self.selectedPiece!=None:
+            for i in self.hints:
+                for j in i:
+                    if j.getShow() and j.is_clicked(pos):
+                        self.pieces[self.selectedPiece.Y][self.selectedPiece.X].update(j.X,j.Y)
+                        print("updating")
+                        return True
+
+    def deselectHints(self):
+        for i in self.hints:
             for j in i:
-                if j!=None and j.is_clicked(pos):
-                    self.selectedPiece=j
-                    j.select()
+                j.switchOff()
+    def switchOnHints(self,listOfHints):
+        for i in listOfHints:
+            self.hints[i[1]][i[0]].switchOn()
+
     def deselect(self):
         self.selectedPiece.deselect()
         self.selectedPiece=None

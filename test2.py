@@ -7,12 +7,13 @@ screen = pygame.display.set_mode ((600, 600))  # a surface.
 screen.fill((255,255,255))
 pygame.display.flip()
 board=Board(screen,50)
-#board.initializePieces()
+board.initializePieces()
 while True:
    
     screen.fill((255,255,255))
     board.drawBoard()
     board.drawPieces()
+    board.drawHints()
     pygame.display.update()
     key = pygame.key.get_pressed()
     if key[pygame.K_DOWN]:
