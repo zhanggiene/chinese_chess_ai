@@ -17,7 +17,8 @@ class Board:
         self.Row=9
         self.Column=8
         self.cellSize=cellSize
-        self.surf = pygame.Surface(((self.Column+2)*self.cellSize,(self.Row+2)*self.cellSize))
+        #self.surf = pygame.Surface(((self.Column+2)*self.cellSize,(self.Row+2)*self.cellSize))
+        self.surf=screen
         self.surf.fill((0,255,0))
         self.width=cellSize*self.Row
         self.height=cellSize*self.Column
@@ -33,7 +34,7 @@ class Board:
 
 
     def drawBoard(self):
-        self.surf.fill((0,255,0)) # fill up all the so that the pieces can move arround
+        #self.surf.fill((0,255,0)) # fill up all the so that the pieces can move arround
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,self.cellSize), ((self.Column+1)*self.cellSize, self.cellSize),3)
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,self.cellSize), (self.cellSize,(self.Row+1)*self.cellSize),3)
         pygame.draw.line(self.surf, self.Color_line,(self.cellSize,(self.Column+2)*self.cellSize),((self.Column+1)*self.cellSize,(self.Row+1)*self.cellSize),3)
@@ -51,8 +52,7 @@ class Board:
         pygame.draw.line(self.surf, self.Color_line,(6*self.cellSize,8*self.cellSize), (4*self.cellSize, 10*self.cellSize))
         #pygame.draw.circle(self.surf,self.Color_line,(self.cellSize,self.cellSize),30)
         #pygame.draw.acircle(self.surf, 0, 0, 20, (3,3,3))
-        self.drawPieces()
-        self.screen.blit(self.surf, (200,40))
+        #self.screen.blit(self.surf, (200,40))
     def initializePieces(self):
         #initialize both the object stored in Mattrix 
         for i in initialPosition:
@@ -66,6 +66,12 @@ class Board:
                     j.draw(self.surf)
     def update(self):
         self.pieces[0][0].update(1,1)
+    def checkCLicking(self):
+        for i in self.pieces:
+            for j in i:
+                if j!=None and j.is_clicked():
+                    print("clciked")
+
         
     def print(self):
         for i in self.pieces:
