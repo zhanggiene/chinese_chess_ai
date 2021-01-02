@@ -27,6 +27,7 @@ class Board:
         self.pieces=[[None for i in range(self.Column+1)] for j in range(self.Row+1)]
         self.screen=screen
         self.pieces[0][0]=Piece(self.surf,0,0,0,0,self.cellSize)
+        self.selectedPiece=None
         '''
     @staticmethod
     def potentialMove(_type):
@@ -66,11 +67,15 @@ class Board:
                     j.draw(self.surf)
     def update(self):
         self.pieces[0][0].update(1,1)
-    def checkCLicking(self):
+    def getClicked(self,pos):
         for i in self.pieces:
             for j in i:
-                if j!=None and j.is_clicked():
-                    print("clciked")
+                if j!=None and j.is_clicked(pos):
+                    self.selectedPiece=j
+                    j.select()
+    def deselect(self):
+        self.selectedPiece.deselect()
+        self.selectedPiece=None
 
         
     def print(self):

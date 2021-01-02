@@ -44,7 +44,8 @@ class Piece(pygame.sprite.Sprite):
         if not self.selected:
             self.reDrawImage()
         else:
-            pygame.draw.circle(self.image,(255,0,0), (self.cellSize// 2, self.cellSize// 2),25,1)
+            #pygame.draw.circle(self.image,(255,0,0), (self.cellSize// 2, self.cellSize// 2),25,1)
+            gfxdraw.aacircle(self.image, self.cellSize// 2, self.cellSize// 2, 20, (255,0,0))
         screen.blit(self.image,self.rect)
     def select(self):
         self.selected=True
@@ -64,8 +65,8 @@ class Piece(pygame.sprite.Sprite):
         #self.boardSurface.blit (self.image,self.rect)
     def __str__(self):
         return str(self.type)+" "
-    def is_clicked(self):
-        return pygame.mouse.get_pressed()[0] and self.rect.collidepoint(pygame.mouse.get_pos())
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos)
 
 
 

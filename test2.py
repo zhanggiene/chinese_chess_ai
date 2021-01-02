@@ -14,8 +14,6 @@ while True:
     board.drawBoard()
     board.drawPieces()
     pygame.display.update()
-    ev=pygame.event.get()
-    board.checkCLicking()
     key = pygame.key.get_pressed()
     if key[pygame.K_DOWN]:
         board.update()
@@ -24,4 +22,11 @@ while True:
     for events in pygame.event.get():
         if events.type == QUIT:
             sys.exit(0)
+        if events.type==MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            board.getClicked(pos)
+        if events.type == pygame.KEYDOWN:
+            if events.key == pygame.K_ESCAPE:
+                board.deselect()
+
         
