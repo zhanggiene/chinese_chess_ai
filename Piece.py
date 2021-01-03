@@ -134,6 +134,50 @@ class Piece(pygame.sprite.Sprite):
                     moves.append((0,i-self.Y))
                     break     # add the first non empty place
         # to do cannon
+        elif self.type==5:
+            for i in range(self.X-1,-1,-1):# to the left
+                if PiecesObject[self.Y][i]==None:
+                    moves.append((i-self.X,0))
+                else:
+                    for j in range(i-1,-1,-1):
+                        if PiecesObject[self.Y][j]!=None:
+                            moves.append((j-self.X,0))
+                            break
+                    break
+            for i in range(self.X+1,colomnNumber+1,1):# to the right
+                if PiecesObject[self.Y][i]==None:
+                    moves.append((i-self.X,0))
+                else:
+                    for j in range(i+1,colomnNumber+1,1):
+                        if PiecesObject[self.Y][j]!=None:
+                            moves.append((j-self.X,0))
+                            break
+                    break
+            for i in range(self.Y+1,rowNumber+1,1):# to the bottom
+                if PiecesObject[i][self.X]==None:
+                    moves.append((0,i-self.Y))
+                else:
+                    for j in range(i+1,colomnNumber+1,1):
+                        if PiecesObject[j][self.X]!=None:
+                            moves.append((0,j-self.Y))
+                            break
+                    break
+            for i in range(self.Y-1,-1,-1):# to the top
+                if PiecesObject[i][self.X]==None:
+                     moves.append((0,i-self.Y))
+                else:
+                    for j in range(i-1,-1,-1):
+                        if PiecesObject[j][self.X]!=None:
+                            moves.append((0,j-self.Y))
+                            break
+                    break
+                        
+            
+            
+
+
+
+
         elif self.type==6:        
             if self.playerType==0:    # red top player
                 if self.Y<5:
