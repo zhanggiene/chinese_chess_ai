@@ -13,8 +13,8 @@ client side:
 3,capture the pieces 
 
 bug one:
-xiang can cross to the enemy side
-solder overflow 
+xiang can cross to the enemy side done
+solder overflow  
 fix pao 
 
 

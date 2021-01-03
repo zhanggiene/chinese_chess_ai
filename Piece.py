@@ -76,16 +76,21 @@ class Piece(pygame.sprite.Sprite):
         if self.type==0 or self.type==1:
             for i in potentialMoveDict[self.type]:
                 if self.playerType==0:
-                    if self.isInside(rowNumber,colomnNumber,i) and 3<=(self.X+i[0])<=5 and 0<=(self.Y+i[0])<=2:
+                    if self.isInside(rowNumber,colomnNumber,i) and 3<=(self.X+i[0])<=5 and 0<=(self.Y+i[1])<=2:
                         moves.append(i)
                 else:
-                    if self.isInside(rowNumber,colomnNumber,i) and 3<=(self.X+i[0])<=5 and 7<=(self.Y+i[0])<=9:
+                    if self.isInside(rowNumber,colomnNumber,i) and 3<=(self.X+i[0])<=5 and 7<=(self.Y+i[1])<=9:
                         moves.append(i)
 
         elif self.type==2:
             for i in potentialMoveDict[self.type]:
-                if self.isInside(rowNumber,colomnNumber,i) and PiecesObject[self.Y+((i[1])//2)][self.X+(i[0]//2)]==None:
-                    moves.append(i)
+                if self.playerType==0:
+                    if self.isInside(rowNumber,colomnNumber,i) and PiecesObject[self.Y+((i[1])//2)][self.X+(i[0]//2)]==None and  0<=(self.Y+i[1])<=4:
+                        moves.append(i)
+                else:
+                    if self.isInside(rowNumber,colomnNumber,i) and PiecesObject[self.Y+((i[1])//2)][self.X+(i[0]//2)]==None and  5<=(self.Y+i[1])<=9:
+                        moves.append(i)
+
         elif self.type==3:
             if self.isInside(rowNumber,colomnNumber,(2,-1)) and PiecesObject[self.Y][self.X+1]==None:
                 moves.append((2,-1))
@@ -137,7 +142,8 @@ class Piece(pygame.sprite.Sprite):
                     for i in potentialMoveDict[self.type]:
                         if self.isInside(rowNumber,colomnNumber,i):
                             moves.append(i)
-                    moves.append((0,1))  #go forward
+                    if self.isInside(rowNumber,colomnNumber,(0,1)):
+                            moves.append((0,1)) # go forward if it is still inside 
             else:
                 if self.Y>=5:
                     moves.append((0,-1))   #only go forward
@@ -145,7 +151,8 @@ class Piece(pygame.sprite.Sprite):
                     for i in potentialMoveDict[self.type]:
                         if self.isInside(rowNumber,colomnNumber,i):
                             moves.append(i)
-                    moves.append((0,-1))  #go to the top form bottom
+                    if self.isInside(rowNumber,colomnNumber,(0,-1)):
+                            moves.append((0,-1)) # go forward if it is still inside 
         # filter one more time, the the potential move cannot land on your own 
         print(moves)
         for i in moves:
