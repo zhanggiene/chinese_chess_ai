@@ -97,8 +97,11 @@ class Board:
             for i in self.hints:
                 for j in i:
                     if j.getShow() and j.is_clicked(pos):
-                        self.pieces[self.selectedPiece.Y][self.selectedPiece.X].update(j.X,j.Y)
+                        self.pieces[self.selectedPiece.Y][self.selectedPiece.X]=None # old place becomes none
+                        self.selectedPiece.update(j.X,j.Y) #update visually 
+                        self.pieces[j.Y][j.X]=self.selectedPiece # update the object representation
                         print("updating")
+                        self.print()
                         return True
 
     def deselectHints(self):
@@ -109,9 +112,11 @@ class Board:
         for i in listOfHints:
             self.hints[i[1]][i[0]].switchOn()
 
+
     def deselect(self):
         self.selectedPiece.deselect()
         self.selectedPiece=None
+        self.deselectHints()
 
         
     def print(self):

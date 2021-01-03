@@ -12,5 +12,10 @@ client side:
 2,select and move the piece accodingly, each pieces got different roles. 
 3,capture the pieces 
 
+bug one:
+xiang can cross to the enemy side
+solder overflow 
+fix pao 
+
 
 
