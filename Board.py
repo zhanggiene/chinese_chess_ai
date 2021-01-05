@@ -45,6 +45,9 @@ class Board:
         self.textBottomPos.center=(self.surf.get_rect().centerx,self.surf.get_rect().height-30)
         self.textBottomPos2 = self.textBottom2.get_rect ()
         self.textBottomPos2.center=(self.surf.get_rect().centerx,self.surf.get_rect().height-30)
+        self.From=None
+        self.To=None
+        self.RECTANGLE=pygame.Rect(0, 0, self.cellSize, self.cellSize)
 
 
 
@@ -82,6 +85,12 @@ class Board:
             self.surf.blit(self.textBottom1,self.textBottomPos)
         else:
             self.surf.blit(self.textBottom2,self.textBottomPos2)
+        if self.From!=None:
+            self.RECTANGLE.center = ((self.From[0]+1)*self.cellSize,(self.From[1]+1)*self.cellSize)
+            pygame.draw.rect(self.surf,(0,0,255),self.RECTANGLE,1)
+            self.RECTANGLE.center = ((self.To[0]+1)*self.cellSize,(self.To[1]+1)*self.cellSize)
+            pygame.draw.rect(self.surf,(0,0,255),self.RECTANGLE,1)
+            #pygame.draw.rect(self.surf,(0,0,255),((self.To[0]+1)*self.cellSize,(self.To[1]+1)*self.cellSize,self.cellSize,self.cellSize))
             
     def initializePieces(self):
         #initialize both the object stored in Mattrix 
@@ -123,11 +132,15 @@ class Board:
             for i in self.hints:
                 for j in i:
                     if j.getShow() and j.is_clicked(pos):
+                        from_temp=(self.selectedPiece.X,self.selectedPiece.Y)
+                        to_temp=(j.X,j.Y)
                         self.pieces[self.selectedPiece.Y][self.selectedPiece.X]=None # old place becomes none
                         self.selectedPiece.update(j.X,j.Y) #update visually 
                         self.pieces[j.Y][j.X]=self.selectedPiece # update the object representation
                         print("updating")
                         self.print()
+                        self.setFromTo(from_temp,to_temp)
+                        print(from_temp,to_temp)
                         return True
 
     def deselectHints(self):
@@ -158,6 +171,10 @@ class Board:
             self.currentPlayer=1
         else:
             self.currentPlayer=0
+    def setFromTo(self,From,To):
+        self.From=From
+        self.To=To
+
             
 
 

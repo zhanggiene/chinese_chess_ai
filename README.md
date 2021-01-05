@@ -12,8 +12,7 @@ client side:
 2,select and move the piece accodingly, each pieces got different roles. 
 3,capture the pieces 
 
-1, add your turn my turn  you are red, u are black. 
-2, player can only move his/her code in turn. 
+
 
 
 

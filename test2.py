@@ -9,7 +9,7 @@ pygame.init ()
 screen = pygame.display.set_mode ((500, 600))  # a surface. 
 screen.fill((255,255,255))
 pygame.display.flip()
-board=Board(0,screen,50)
+board=Board(1,screen,50)
 board.initializePieces()
 while True:
    
