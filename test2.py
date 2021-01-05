@@ -32,5 +32,9 @@ while True:
         if events.type == pygame.KEYDOWN:
             if events.key == pygame.K_ESCAPE:
                 board.deselect()
+            if events.key == pygame.K_p:
+                board.setFromTo((0,0),(0,1))
+            if events.key == pygame.K_o:
+                board.setFromTo((0,1),(0,0))
 
         

@@ -113,15 +113,13 @@ class Board:
         if self.selectedPiece==None:
             for i in self.pieces:
                 for j in i:
-                    if j!=None and j.is_clicked(pos) and j.playerType==self.currentPlayer:
+                    if j!=None and j.is_clicked(pos) and j.playerType==self.playerType and j.playerType==self.currentPlayer:
                         self.selectedPiece=j
                         j.select()
                         lists=j.potentialMove(self.Row,self.Column,self.pieces) # all the legal point
                         self.switchOnHints(lists)
 
         elif self.movePiece(pos):
-            self.changePlayer()
-
             self.deselect()
         else:
             self.deselect()
@@ -134,13 +132,7 @@ class Board:
                     if j.getShow() and j.is_clicked(pos):
                         from_temp=(self.selectedPiece.X,self.selectedPiece.Y)
                         to_temp=(j.X,j.Y)
-                        self.pieces[self.selectedPiece.Y][self.selectedPiece.X]=None # old place becomes none
-                        self.selectedPiece.update(j.X,j.Y) #update visually 
-                        self.pieces[j.Y][j.X]=self.selectedPiece # update the object representation
-                        print("updating")
-                        self.print()
                         self.setFromTo(from_temp,to_temp)
-                        print(from_temp,to_temp)
                         return True
 
     def deselectHints(self):
@@ -171,9 +163,19 @@ class Board:
             self.currentPlayer=1
         else:
             self.currentPlayer=0
-    def setFromTo(self,From,To):
+        print("changing player type")
+        print("new player type is")
+        print(self.currentPlayer)
+    def setFromTo(self,From,To):# change the two position automatically
+        self.pieces[From[1]][From[0]].update(To[0],To[1])
+        self.pieces[To[1]][To[0]]=self.pieces[From[1]][From[0]] # update the object representation
+        self.pieces[From[1]][From[0]]=None
+        self.print()
         self.From=From
         self.To=To
+        self.changePlayer()
+        self.deselectHints()
+
 
             
 
