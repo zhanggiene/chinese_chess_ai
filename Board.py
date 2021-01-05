@@ -6,7 +6,7 @@ initialPosition={0:[(4,0)],1:[(3,0),(5,0)],2:[(2,0),(6,0)],3:[(1,0),(7,0)],4:[(0
 
 #start with 0,0    because we need to 
 class Board:
-    def __init__(self,screen,cellSize):
+    def __init__(self,playerType,screen,cellSize):
         """
         docstring
         4 row 
@@ -24,6 +24,8 @@ class Board:
         self.width=cellSize*self.Row
         self.height=cellSize*self.Column
         self.Color_line=(0,0,0)
+        self.playerType=playerType # o is red starts first, 1 is black. 
+        self.currentPlayer=0   #red start first
         #self.pieces=[[-1]*(self.Column+1)]*(self.Row+1)   # wrong 
         self.pieces=[[None for i in range(self.Column+1)] for j in range(self.Row+1)]
         #access the self.pieces [Y][X]
@@ -32,6 +34,20 @@ class Board:
         self.screen=screen
         #self.pieces[0][0]=Piece(self.surf,0,0,0,0,self.cellSize)
         self.selectedPiece=None
+        self.font=pygame.font.SysFont("hiraginosansgbttc",20)
+        self.textTopRed = self.font.render ("You are red", True, (255, 0, 0))
+        self.textTopBlack=self.font.render ("You are Black", True, (0, 0, 0))
+        self.textBottom1=self.font.render ("Your turn", True, (128, 0, 128))
+        self.textBottom2=self.font.render ("Opponent's turn", True, (128, 0, 128))
+        self.textTopPos = self.textTopRed.get_rect ()
+        self.textTopPos.center=(self.surf.get_rect().centerx,20)
+        self.textBottomPos = self.textBottom1.get_rect ()
+        self.textBottomPos.center=(self.surf.get_rect().centerx,self.surf.get_rect().height-30)
+        self.textBottomPos2 = self.textBottom2.get_rect ()
+        self.textBottomPos2.center=(self.surf.get_rect().centerx,self.surf.get_rect().height-30)
+
+
+
         '''
     @staticmethod
     def potentialMove(_type):
@@ -58,6 +74,15 @@ class Board:
         #pygame.draw.circle(self.surf,self.Color_line,(self.cellSize,self.cellSize),30)
         #pygame.draw.acircle(self.surf, 0, 0, 20, (3,3,3))
         #self.screen.blit(self.surf, (200,40))
+        if self.playerType==0: #red
+            self.surf.blit(self.textTopRed,self.textTopPos)
+        else:
+            self.surf.blit(self.textTopBlack,self.textTopPos)
+        if self.currentPlayer==self.playerType:
+            self.surf.blit(self.textBottom1,self.textBottomPos)
+        else:
+            self.surf.blit(self.textBottom2,self.textBottomPos2)
+            
     def initializePieces(self):
         #initialize both the object stored in Mattrix 
         for i in initialPosition:
@@ -75,23 +100,24 @@ class Board:
         for i in self.hints:
             for j in i:
                 j.draw(self.surf)
-    def update(self):
-        self.pieces[0][0].update(1,1)
     def getClicked(self,pos):
         if self.selectedPiece==None:
             for i in self.pieces:
                 for j in i:
-                    if j!=None and j.is_clicked(pos):
+                    if j!=None and j.is_clicked(pos) and j.playerType==self.currentPlayer:
                         self.selectedPiece=j
                         j.select()
                         lists=j.potentialMove(self.Row,self.Column,self.pieces) # all the legal point
                         self.switchOnHints(lists)
 
         elif self.movePiece(pos):
+            self.changePlayer()
+
             self.deselect()
         else:
             self.deselect()
             self.getClicked(pos)
+        
     def movePiece(self,pos):
         if self.selectedPiece!=None:
             for i in self.hints:
@@ -127,6 +153,11 @@ class Board:
             print(" ")
     def getPieces(self):
         return self.pieces
+    def changePlayer(self):
+        if self.currentPlayer==0:
+            self.currentPlayer=1
+        else:
+            self.currentPlayer=0
             
 
 

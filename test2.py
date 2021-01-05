@@ -2,11 +2,14 @@ import pygame,sys
 from pygame.locals import * 
 from Board import Board
 from Piece import Piece
+RED=0
+BLACK=1
+
 pygame.init ()  
-screen = pygame.display.set_mode ((600, 600))  # a surface. 
+screen = pygame.display.set_mode ((500, 600))  # a surface. 
 screen.fill((255,255,255))
 pygame.display.flip()
-board=Board(screen,50)
+board=Board(0,screen,50)
 board.initializePieces()
 while True:
    
