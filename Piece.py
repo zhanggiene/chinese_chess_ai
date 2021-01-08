@@ -20,26 +20,31 @@ class Piece(pygame.sprite.Sprite):
     def __init__(self,boardSurface,_type,playerType,initX,initY,size):
         super().__init__()
         self.cellSize=size
-        self.image=pygame.Surface((self.cellSize,self.cellSize),pygame.SRCALPHA)
+       
         self.type=_type
         self.playerType=playerType
         self.X=initX
         self.Y=initY
         self.selected=False
-        self.font=pygame.font.SysFont("hiraginosansgbttc",40)
-        self.empty = pygame.Color(0,0,0,0)
         
-        if (playerType==0):
+        self.empty = pygame.Color(0,0,0,0)
+        self.initialize()
+       
+    def initialize(self): #easier to pickle
+        self.image=pygame.Surface((self.cellSize,self.cellSize),pygame.SRCALPHA)
+        self.font=pygame.font.SysFont("hiraginosansgbttc",40)
+        if (self.playerType==0):
             self.color=(255,0,0)
-            self.text = self.font.render (PieceName0[_type], True, (255, 0, 0))
+            self.text = self.font.render (PieceName0[self.type], True, (255, 0, 0))
         else:
             self.color=(0,0,0)
-            self.text = self.font.render (PieceName1[_type], True, (0, 0, 0))
+            self.text = self.font.render (PieceName1[self.type], True, (0, 0, 0))
         self.textpos = self.text.get_rect ()  
         self.textpos.center = self.image.get_rect (). center
         self.image.blit(self.text,self.textpos)
         
         self.rect=self.image.get_rect(center=((self.X+1)*self.cellSize,(self.Y+1)*self.cellSize))
+
     def reDrawImage(self):
         self.image.fill(self.empty)
         self.image.blit(self.text,self.textpos)
@@ -205,31 +210,9 @@ class Piece(pygame.sprite.Sprite):
         #print(moves2)
         return moves2
 
-        
-                
-
-
-            
-
-            
-
-            
-
-
-
-
     def isInside(self,rowNumber,colomnNumber,i):
         return (i[0]+self.X)>=0 and (i[0]+self.X)<=colomnNumber and (i[1]+self.Y)>=0 and (i[1]+self.Y)<=rowNumber
 
-
-
-
-
-
-
-
-
-
-
-
-
+        
+                
+   

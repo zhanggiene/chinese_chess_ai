@@ -1,1 +1,2 @@
-getClicked
+playerType=n.receive()
+                print(playerType)

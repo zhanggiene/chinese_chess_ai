@@ -6,7 +6,7 @@ initialPosition={0:[(4,0)],1:[(3,0),(5,0)],2:[(2,0),(6,0)],3:[(1,0),(7,0)],4:[(0
 
 #start with 0,0    because we need to 
 class Board:
-    def __init__(self,playerType,screen,cellSize):
+    def __init__(self,n,playerType,screen,cellSize):
         """
         docstring
         4 row 
@@ -48,6 +48,7 @@ class Board:
         self.From=None
         self.To=None
         self.RECTANGLE=pygame.Rect(0, 0, self.cellSize, self.cellSize)
+        self.network=n
 
 
 
@@ -120,6 +121,7 @@ class Board:
                         self.switchOnHints(lists)
 
         elif self.movePiece(pos):
+            self.network.send(self.sendBoardData())
             self.deselect()
         else:
             self.deselect()
@@ -175,6 +177,13 @@ class Board:
         self.To=To
         self.changePlayer()
         self.deselectHints()
+    def sendBoardData(self):
+        temp=[self.From,self.To]
+        return temp
+    def loadBoardData(self,data):
+        self.setFromTo(data[0],data[1])
+        self.print()
+
 
 
             
