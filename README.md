@@ -17,7 +17,10 @@ Usage:
 
 
 future update:
-clean up server and enable multi player to join, now only 2 players are supported. when any player exit, server need to restart. 
+clean up server and enable multi player to join, now only 2 players are supported. when any player exit, server need to restart.
+
+#program structure:
+![Alt Text](https://github.com/zhanggiene/chinese_chess_ai/blob/master/Star-4.jpg)
 
 
 
