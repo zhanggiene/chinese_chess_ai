@@ -1,4 +1,6 @@
 # chinese_chess_ai
+
+![Alt Text](https://github.com/zhanggiene/chinese_chess_ai/blob/master/chineseChess.jpg)
 inspiration: 
 https://www.youtube.com/watch?v=4twKNHypPN8&ab_channel=TechWithTim 
 
@@ -23,8 +25,5 @@ clean up server and enable multi player to join, now only 2 players are supporte
 https://youtu.be/AAWafralGy8 
 # program structure:
 ![Alt Text](https://github.com/zhanggiene/chinese_chess_ai/blob/master/Star-4.jpg)
-
-
-
 
 
